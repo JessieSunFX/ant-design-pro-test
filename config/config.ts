@@ -281,6 +281,19 @@ export default defineConfig({
               ],
             },
             {
+              name: 'ai',
+              icon: 'highlight',
+              path: '/ai',
+              routes: [
+                {
+                  name: 'robot',
+                  icon: 'smile',
+                  path: '/ai/robot',
+                  component: './ai/robot',
+                }
+              ],
+            },
+            {
               component: '404',
             },
           ],
