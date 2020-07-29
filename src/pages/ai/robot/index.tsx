@@ -240,7 +240,8 @@ function initDiagram() {
             copiesArrays: false,
             copiesArrayObjects: false,
             nodeDataArray: nodedata,
-            linkDataArray: linkdata
+            linkDataArray: linkdata,
+            linkKeyProperty: 'key'
         });
 
     return diagram;
@@ -259,7 +260,7 @@ function handleModelChange(changes: any) {
 const Robot: React.FC<any> = () => {
 
     return (
-        <div>
+        
             <ReactDiagram
                 initDiagram={initDiagram}
                 divClassName='diagram-component'
@@ -268,7 +269,7 @@ const Robot: React.FC<any> = () => {
                 onModelChange={handleModelChange}
                 skipsDiagramUpdate={true}
             />
-        </div>
+        
     );
 };
 
