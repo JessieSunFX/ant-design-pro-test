@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import * as go from 'gojs';
 import { ReactDiagram, ReactPalette } from 'gojs-react';
@@ -1511,11 +1511,13 @@ function handleModelChange(changes: any) {
 
 const Robot: React.FC<any> = () => {
     const myInspector = useRef(null);
-
+    const myInput = useRef(null);
+    const [ title, setTitle ] = useState("")
+    let inspector:any
     useEffect(() => {
         console.log('myInspector:::', myInspector)
         console.log('diagram:::', diagram)
-        var inspector = new Inspector(myInspector, diagram,
+        inspector = new Inspector(myInspector, diagram,
             {
                 // By default the inspector works on the Diagram selection.
                 // This property lets us inspect a specific object by calling Inspector.inspectObject.
@@ -1531,7 +1533,22 @@ const Robot: React.FC<any> = () => {
                 }
             });
         inspector.inspectObject(diagram);
+
+        
     }, [])
+
+    const handleChange = (e:any) => {
+        setTitle(e.target.value)
+        console.log(e.target.value)
+
+        var data = nodedata[0]
+
+        diagram.startTransaction('set all properties');
+        diagram.model.setDataProperty(data, 'title', e.target.value);
+        diagram.commitTransaction('set all properties');
+        
+        
+    }
 
     return (
         <div className='diagram-wrapper'>
@@ -1552,7 +1569,8 @@ const Robot: React.FC<any> = () => {
                 />
 
                 <div id='myInspectorId' ref={myInspector} className='inspector'>
-
+                    <p>title</p>
+                    <input type="text" onChange={handleChange} ref={myInput}/>
                 </div>
 
             </div>

@@ -164,27 +164,28 @@ Inspector.prototype.inspectObject = function (object) {
     var data = (inspectedObject instanceof go.Part) ? inspectedObject.data : inspectedObject;
     if (!data) return;
 
-    //alert(data.category);
+    alert(data.category);
+    console.log("inspector::", data)
     // 根据组件类型，显示指定的属性面板
-    if (data.category === 'StartComponent') {
-        this.ShowStartComponentPanel(inspectedObject);
-    } else if (data.category === 'IntentComponent') {
-        this.ShowIntentComponentPanel(inspectedObject);
-    } else if (data.category === 'KeyComponent') {
-        this.ShowKeyComponentPanel(inspectedObject);
-    } else if (data.category === 'ConditionComponent') {
-        this.ShowConditionComponentPanel(inspectedObject);
-    } else if (data.category === 'InterfaceComponent') {
-        this.ShowInterfaceComponentPanel(inspectedObject);
-    } else if (data.category === 'TransferManualServiceComponent') {
-        this.ShowTransferManualServiceComponentPanel(inspectedObject);
-    } else if (data.category === 'InfoCollectionComponent') {
-        this.ShowInfoCollectionComponentPanel(inspectedObject);
-    } else if (data.category === 'EndComponent') {
-        this.ShowEndComponentPanel(inspectedObject);
-    } else {
+    // if (data.category === 'StartComponent') {
+    //     this.ShowStartComponentPanel(inspectedObject);
+    // } else if (data.category === 'IntentComponent') {
+    //     this.ShowIntentComponentPanel(inspectedObject);
+    // } else if (data.category === 'KeyComponent') {
+    //     this.ShowKeyComponentPanel(inspectedObject);
+    // } else if (data.category === 'ConditionComponent') {
+    //     this.ShowConditionComponentPanel(inspectedObject);
+    // } else if (data.category === 'InterfaceComponent') {
+    //     this.ShowInterfaceComponentPanel(inspectedObject);
+    // } else if (data.category === 'TransferManualServiceComponent') {
+    //     this.ShowTransferManualServiceComponentPanel(inspectedObject);
+    // } else if (data.category === 'InfoCollectionComponent') {
+    //     this.ShowInfoCollectionComponentPanel(inspectedObject);
+    // } else if (data.category === 'EndComponent') {
+    //     this.ShowEndComponentPanel(inspectedObject);
+    // } else {
 
-    }
+    // }
 };
 
 Inspector.prototype.registerUpdateEvent = function (nodeCategory, data, itemName, element) {
