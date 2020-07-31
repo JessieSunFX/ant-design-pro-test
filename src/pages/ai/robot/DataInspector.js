@@ -164,28 +164,28 @@ Inspector.prototype.inspectObject = function (object) {
     var data = (inspectedObject instanceof go.Part) ? inspectedObject.data : inspectedObject;
     if (!data) return;
 
-    alert(data.category);
+    console.log(data.category);
     console.log("inspector::", data)
     // 根据组件类型，显示指定的属性面板
-    // if (data.category === 'StartComponent') {
-    //     this.ShowStartComponentPanel(inspectedObject);
-    // } else if (data.category === 'IntentComponent') {
-    //     this.ShowIntentComponentPanel(inspectedObject);
-    // } else if (data.category === 'KeyComponent') {
-    //     this.ShowKeyComponentPanel(inspectedObject);
-    // } else if (data.category === 'ConditionComponent') {
-    //     this.ShowConditionComponentPanel(inspectedObject);
-    // } else if (data.category === 'InterfaceComponent') {
-    //     this.ShowInterfaceComponentPanel(inspectedObject);
-    // } else if (data.category === 'TransferManualServiceComponent') {
-    //     this.ShowTransferManualServiceComponentPanel(inspectedObject);
-    // } else if (data.category === 'InfoCollectionComponent') {
-    //     this.ShowInfoCollectionComponentPanel(inspectedObject);
-    // } else if (data.category === 'EndComponent') {
-    //     this.ShowEndComponentPanel(inspectedObject);
-    // } else {
+    if (data.category === 'StartComponent') {
+        this.ShowStartComponentPanel(inspectedObject);
+    } else if (data.category === 'IntentComponent') {
+        this.ShowIntentComponentPanel(inspectedObject);
+    } else if (data.category === 'KeyComponent') {
+        this.ShowKeyComponentPanel(inspectedObject);
+    } else if (data.category === 'ConditionComponent') {
+        this.ShowConditionComponentPanel(inspectedObject);
+    } else if (data.category === 'InterfaceComponent') {
+        this.ShowInterfaceComponentPanel(inspectedObject);
+    } else if (data.category === 'TransferManualServiceComponent') {
+        this.ShowTransferManualServiceComponentPanel(inspectedObject);
+    } else if (data.category === 'InfoCollectionComponent') {
+        this.ShowInfoCollectionComponentPanel(inspectedObject);
+    } else if (data.category === 'EndComponent') {
+        this.ShowEndComponentPanel(inspectedObject);
+    } else {
 
-    // }
+    }
 };
 
 Inspector.prototype.registerUpdateEvent = function (nodeCategory, data, itemName, element) {
@@ -251,12 +251,15 @@ Inspector.prototype.ShowKeyComponentPanel = function (inspectedObject) {
     var data = (inspectedObject instanceof go.Part) ? inspectedObject.data : inspectedObject;
     if (!data) return;
 
+    console.log('按键组件：：：');
+
+
     // Build table:
     var table = document.createElement('table');
     var tbody = document.createElement('tbody');
 
     var tr1 = document.createElement("tr");
-    tr1.textContent = "*按键组件";
+    tr1.textContent = "*按键组件名称";
     tbody.appendChild(tr1);
 
     var tr2 = document.createElement("tr");
@@ -266,6 +269,10 @@ Inspector.prototype.ShowKeyComponentPanel = function (inspectedObject) {
     this.registerUpdateEvent(data.category, data, "title", input);
 
     tr2.appendChild(input);
+    tbody.appendChild(tr2);
+
+    var tr3 = document.createElement("tr");
+    tr3.textContent = "*话术内容";
     tbody.appendChild(tr2);
 
     table.appendChild(tbody);
@@ -438,6 +445,8 @@ Inspector.prototype.updateKeyNodeData = function (data, itemName, element) {
     var diagram = this._diagram;
 
     if (itemName === "title") {
+        console.log('updateKeyNodeData:::', data, itemName, element)
+        console.log('updateKeyNodeDataDiagram::', diagram)
         diagram.startTransaction('set all properties');
         diagram.model.setDataProperty(data, itemName, element.value);
         diagram.commitTransaction('set all properties');

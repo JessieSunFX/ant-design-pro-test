@@ -1,18 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+
 import * as go from 'gojs';
-import { ReactDiagram, ReactPalette } from 'gojs-react';
-import Inspector from './DataInspector.js';
 import { nodedataFn, linkdataFn, paletteNodeDataArrayFn } from './data'
-import './DataInspector.css'; // setup a few example class nodes and relationships
-
-import './style.less'; // contains .diagram-component CSS
-
-
 
 let nodedata = nodedataFn();
 let linkdata = linkdataFn();
 let paletteNodeDataArray = paletteNodeDataArrayFn();
-
 /**
  * This function is responsible for setting up the diagram's initial properties and any templates.
  */
@@ -75,7 +67,7 @@ const diagram = $(go.Diagram, {
     'undoManager.isEnabled': true, //键盘事件
 });
 
-function initDiagram() {
+export function initDiagram() {
     // show visibility or access as a single character at the beginning of each property or method
     function convertVisibility(v) {
         switch (v) {
@@ -1825,7 +1817,7 @@ function initDiagram() {
     return diagram;
 }
 
-function initPalette() {
+export function initPalette() {
     var myPalette = $(go.Palette, {
         //用Gridlayout格子布局垂直排列每行数据
         contentAlignment: go.Spot.TopLeft,
@@ -1891,96 +1883,5 @@ function animateFadeDown(e) {
     animation.add(diagram, 'opacity', 0, 1);
     animation.start();
 }
-/**
- * This function handles any changes to the GoJS model.
- * It is here that you would make any updates to your React state, which is dicussed below.
- */
 
-function handleModelChange(changes: any) {
-    console.log('GoJS model changed!');
-    console.log(changes);
-}
-
-
-const Robot: React.FC<any> = () => {
-    const myInspector = useRef(null);
-    // const myInput = useRef(null);
-
-    // const [title, setTitle] = useState('');
-    let inspector: any;
-    useEffect(() => {
-        console.log('myInspector:::', myInspector);
-        console.log('diagram:::', diagram);
-        inspector = new Inspector(myInspector.current, diagram, {
-            // By default the inspector works on the Diagram selection.
-            // This property lets us inspect a specific object by calling Inspector.inspectObject.
-            //                    multipleSelection: true,
-            //                    showSize: 4,
-            //                    showAllProperties: true,
-            properties: {
-                text: {},
-                // This property we want to declare as a color, to show a color-picker:
-                color: {
-                    type: 'color',
-                },
-                // key would be automatically added for node data, but we want to declare it read-only also:
-                key: {
-                    readOnly: true,
-                    show: Inspector.showIfPresent,
-                },
-            },
-        });
-        // let data = nodedata[0];
-        inspector.inspectObject(diagram);
-        // console.log('myInput::', myInput)
-        // inspector.registerUpdateEvent(data.category, data, "title", myInput.current);
-    }, []);
-
-    // const handleChange = (e: any) => {
-    //     setTitle(e.target.value);
-    //     console.log(e.target.value);
-    //     var data = nodedata[0];
-    //     diagram.startTransaction('set all properties');
-    //     diagram.model.setDataProperty(data, 'title', e.target.value);
-    //     diagram.commitTransaction('set all properties');
-    // };
-
-    const saveBtn = (e: any) => {
-        console.log('点击保存了！！！！');
-        console.log(nodedata);
-        console.log(linkdata);
-    };
-
-    return (
-        <div className="diagram-wrapper">
-            <button onClick={saveBtn}>保存</button>
-            <ReactPalette
-                initPalette={initPalette}
-                divClassName="palette-component"
-                nodeDataArray={paletteNodeDataArray}
-            />
-
-            <div className="diagram-bottom">
-                <ReactDiagram
-                    initDiagram={initDiagram}
-                    divClassName="diagram-component"
-                    nodeDataArray={nodedata}
-                    linkDataArray={linkdata}
-                    onModelChange={handleModelChange}
-                    skipsDiagramUpdate={true}
-                />
-
-                <div id="myInspectorId" ref={myInspector} className="inspector">
-
-                    <div className="key-component-inspector">
-                        {/* <p>title</p>
-                        <input type="text" onChange={handleChange} ref={myInput} /> */}
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    );
-};
-
-export default Robot;
+export default diagram
