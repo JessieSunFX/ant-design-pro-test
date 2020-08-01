@@ -3,11 +3,20 @@ import * as go from 'gojs';
 import { ReactDiagram, ReactPalette } from 'gojs-react';
 import Inspector from './DataInspector.js';
 import { nodedataFn, linkdataFn, paletteNodeDataArrayFn } from './data'
+import { history, ConnectProps, connect } from 'umi';
+import Test from '@/models/test';
+
+
+console.log('test:::', Test)
+
+
 import './DataInspector.css'; // setup a few example class nodes and relationships
 
 import './style.less'; // contains .diagram-component CSS
 
-
+interface AuthComponentProps extends ConnectProps {
+    test: Test.state
+  }
 
 let nodedata = nodedataFn();
 let linkdata = linkdataFn();
@@ -1902,7 +1911,8 @@ function handleModelChange(changes: any) {
 }
 
 
-const Robot: React.FC<any> = () => {
+const Robot: React.FC<AuthComponentProps> = (props) => {
+    console.log('props:::', props)
     const myInspector = useRef(null);
     // const myInput = useRef(null);
 
@@ -1949,6 +1959,11 @@ const Robot: React.FC<any> = () => {
         console.log('点击保存了！！！！');
         console.log(nodedata);
         console.log(linkdata);
+        props.dispatch({
+            type: 'test/update',
+            payload: 777
+        })
+        console.log(props)
     };
 
     return (
@@ -1983,4 +1998,5 @@ const Robot: React.FC<any> = () => {
     );
 };
 
-export default Robot;
+export default connect(({ test }) => ({ test }))(Robot);  
+
